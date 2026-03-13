@@ -1,4 +1,6 @@
 const Application = require("../models/Application");
+const adminEmailTemplate = require("../emails/adminEmailTemplate");
+const sendEmail = require("../utils/sendEmail");
 
 /**
  * ---------------------------------------------------------
@@ -95,7 +97,19 @@ const createApplication = async (req, res) => {
     });
 
     // -------------------------------------------------
-    // 5️. Success Response
+    // 5️. Send Emails to Admin
+    // -------------------------------------------------
+
+    const adminHtml = adminEmailTemplate(application);
+
+    await sendEmail(
+      process.env.ADMIN_EMAIL,
+      "New Application Received",
+      adminHtml,
+    );
+
+    // -------------------------------------------------
+    // 6. Success Response
     // -------------------------------------------------
     return res.status(201).json({
       success: true,
@@ -104,7 +118,7 @@ const createApplication = async (req, res) => {
     });
   } catch (error) {
     // -------------------------------------------------
-    // 6️. Error Handling
+    // 7. Error Handling
     // -------------------------------------------------
     console.error("Application Error:", error);
 

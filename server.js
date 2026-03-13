@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 const connectDB = require("./config/db");
 const applicationRoutes = require("./routes/applicationRoutes");
 
@@ -39,13 +38,6 @@ connectDB();
 // ------------------ API Routes ------------------
 app.use("/api", applicationRoutes);
 app.use("/api/upload", require("./routes/uploadRoutes"));
-
-// ------------------ Serve React Build ------------------
-app.use(express.static(path.join(__dirname, "dist")));
-
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
 
 // ------------------ Server ------------------
 const PORT = process.env.PORT || 5000;
