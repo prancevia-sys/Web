@@ -91,7 +91,7 @@ const createApplication = async (req, res) => {
       linkedinURL: req.body.linkedinURL,
 
       // Google Cloud File Metadata
-      transactionProof: mapFile(req.body.transactionProof),
+      // transactionProof: mapFile(req.body.transactionProof),
       threeDFile: (req.body.threeDFile || []).map(mapFile),
       twoDPlan: (req.body.twoDPlan || []).map(mapFile),
     });

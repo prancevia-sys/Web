@@ -54,10 +54,10 @@ const applicationSchema = new mongoose.Schema(
     linkedinURL: { type: String, required: true },
 
     // Files (Google Cloud)
-    transactionProof: {
-      type: gcsFileSchema,
-      required: true,
-    },
+    // transactionProof: {
+    //   type: gcsFileSchema,
+    //   required: true,
+    // },
     threeDFile: {
       type: [gcsFileSchema],
       default: [],
