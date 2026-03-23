@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const applicationRoutes = require("./routes/applicationRoutes");
-
+const authRoutes = require("./routes/authRoutes")
 const app = express();
 
 // ------------------ CORS ------------------
@@ -36,6 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 // ------------------ API Routes ------------------
+app.use("/api/auth", authRoutes);
 app.use("/api", applicationRoutes);
 app.use("/api/upload", require("./routes/uploadRoutes"));
 

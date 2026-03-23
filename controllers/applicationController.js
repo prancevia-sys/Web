@@ -100,13 +100,17 @@ const createApplication = async (req, res) => {
     // 5️. Send Emails to Admin
     // -------------------------------------------------
 
-    const adminHtml = adminEmailTemplate(application);
+    try {
+      const adminHtml = adminEmailTemplate(application);
 
-    await sendEmail(
-      process.env.ADMIN_EMAIL,
-      "New Application Received",
-      adminHtml,
-    );
+      await sendEmail(
+        process.env.ADMIN_EMAIL,
+        "New Application Received",
+        adminHtml,
+      );
+    } catch (error) {
+      console.error("Error Sending Email:", error);
+    }
 
     // -------------------------------------------------
     // 6. Success Response
@@ -129,6 +133,44 @@ const createApplication = async (req, res) => {
   }
 };
 
+// -------------------------------------------------
+//  Get All Applications
+//  Fetches all application records from MongoDB
+//  Returns list of applications to admin/frontend
+// -------------------------------------------------
+
+const getApplications = async (req, res) => {
+  try {
+    // Retrieve all application documents
+    const expense = await Application.find();
+    // Send success response with data
+    res.status(200).json(expense);
+  } catch (error) {
+    // Handle server errors
+    res.status(500).json({ message: "Server Error!" });
+  }
+};
+
+// -------------------------------------------------
+//  Delete Application
+//  Deletes a specific application by ID
+//  Used for admin-side application management
+// -------------------------------------------------
+
+const deleteApplication = async (req, res) => {
+  try {
+    // Delete application using ID from request params
+    await Application.findByIdAndDelete(req.params.id);
+    // Send success response
+    res.json({ message: "Application deleted successfully" });
+  } catch (error) {
+    // Handle server errors
+    res.status(500).json({ message: "Server Error!" });
+  }
+};
+
 module.exports = {
   createApplication,
+  getApplications,
+  deleteApplication,
 };
