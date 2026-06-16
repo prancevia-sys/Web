@@ -83,7 +83,6 @@ const createApplication = async (req, res) => {
 
       // Company Information
       companyName: req.body.companyName,
-      organization: req.body.organization,
       yearOfStart: Number(req.body.yearOfStart),
       companyAddress: req.body.companyAddress,
       IndustrySegments,

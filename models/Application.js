@@ -45,12 +45,11 @@ const applicationSchema = new mongoose.Schema(
 
     // Company Info
     companyName: { type: String, required: true },
-    organization: { type: String, required: true },
     yearOfStart: { type: Number, required: true },
     companyAddress: { type: String, required: true },
     IndustrySegments: [{ type: String, required: true }],
     otherIndustry: { type: String },
-    companyWebURL: { type: String, required: true },
+    companyWebURL: { type: String },
     linkedinURL: { type: String, required: true },
 
     // Files (Google Cloud)
