@@ -150,6 +150,36 @@ const getApplications = async (req, res) => {
   }
 };
 
+const getApplicantByID = async (req, res) => {
+  try {
+    const applicantId = req.params.id;
+
+    if (!applicantId) {
+      return res.status(400).json({
+        message: "Applicant ID is required!",
+      });
+    }
+
+    const applicant = await Application.findById(applicantId);
+
+    if (!applicant) {
+      return res.status(404).json({
+        message: "Applicant not found!",
+      });
+    }
+
+    res.status(200).json({
+      message: "Applicant fetched successfully.",
+      applicant,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error!",
+      error: error.message,
+    });
+  }
+};
+
 // -------------------------------------------------
 //  Delete Application
 //  Deletes a specific application by ID
@@ -171,5 +201,6 @@ const deleteApplication = async (req, res) => {
 module.exports = {
   createApplication,
   getApplications,
+  getApplicantByID,
   deleteApplication,
 };

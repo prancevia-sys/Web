@@ -66,7 +66,28 @@ const loginUser = async (req, res) => {
   }
 };
 
+const profile = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        message: "User not authenticated!",
+      });
+    }
+
+    return res.status(200).json({
+      message: "User fetched successfully.",
+      user: req.user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error fetching user profile",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  profile,
 };
